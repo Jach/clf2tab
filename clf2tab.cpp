@@ -17,6 +17,7 @@
 using std::vector;
 using std::string;
 using std::cout;
+using std::cerr;
 using std::cin;
 using std::stringstream;
 
@@ -84,8 +85,11 @@ void scanCLF(const string& line) {
       case 3:
       case 6:
       case 7:
-        if (*it != ' ') {
+        if (*it != ' ' && *it != ',') {
           token += *it;
+        } else if (*it == ',') {
+          tokens.push_back(token);
+          token.clear();
         } else if (!token.empty()) {
           tokens.push_back(token);
           token.clear();
@@ -132,7 +136,9 @@ void scanCLF(const string& line) {
     }
   }
   for (unsigned i = 0; i < tokens.size(); ++i) {
-    cout << tokens[i] << "\t";
+    cout << tokens[i];
+    if (i+1 < tokens.size())
+     cout << "\t";
   }
   cout << std::endl;
 }
